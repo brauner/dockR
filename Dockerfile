@@ -8,6 +8,7 @@ RUN apt-get install -y software-properties-common
 RUN apt-get install -y --no-install-recommends less
 RUN apt-get install -y --no-install-recommends wget
 RUN apt-get install -y --no-install-recommends littler
+RUN apt-get install -y --no-install-recommends rsync
 RUN apt-get install -y --no-install-recommends ssh
 RUN apt-get install -y --no-install-recommends xauth
 
