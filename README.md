@@ -1,4 +1,4 @@
-docker-centos-r
+docker-ubuntu-r
 ===============
 
-Centos image intended for dockerized R development
+Ubuntu image intended for dockerized R development
