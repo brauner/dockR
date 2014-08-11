@@ -17,7 +17,7 @@ RUN cd && printf "UsePAM yes\nAllowTcpForwarding yes\nX11Forwarding yes\nX11Disp
 
 # R devel branch
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
-RUN cd /tmp/R-devel/tools/rsync-recommended
+RUN cd /tmp/R-devel && tools/rsync-recommended
 
 ## Build and install
 RUN cd /tmp/R-devel && R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" R_BROWSER=xdg-open PAGER=/usr/bin/pager PERL=/usr/bin/perl R_UNZIPCMD=/usr/bin/unzip R_ZIPCMD=/usr/bin/zip R_PRINTCMD=/usr/bin/lpr LIBnn=lib AWK=/usr/bin/awk CFLAGS="-pipe -std=gnu99 -Wall -pedantic -O3" CXXFLAGS="-pipe -Wall -pedantic -O3" ./configure
