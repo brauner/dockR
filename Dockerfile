@@ -41,10 +41,10 @@ RUN cd /tmp/R-devel && make && make install
 
 # Adding some packages that are required by some R packages
 # For R devtools
-RUN apt-get install -y --no-install--recommends libcurl4-gnutls-dev
+RUN apt-get install -y --no-install-recommends libcurl4-gnutls-dev
 
 # For lme4 Github version
-RUN apt-get install -y --no-install--recommends lmodern
+RUN apt-get install -y --no-install-recommends lmodern
 
 # Set root passwd
 RUN echo "root:test" | chpasswd
