@@ -49,4 +49,6 @@ Ubuntu image intended for dockerized R development.
    * `ssh -X chbr@172.17.0.80 -p 49154`.
 
    The `-X` flag sets up `X11`-forwarding (So that you can see plots and
-   pdfs and so on.).
+   pdfs and so on.). If the port `22` is mapped to another port but the
+   connection is refused on that port. Try the default port `22`. Hence,
+   try `ssh -X chbr@172.17.0.80` without specifying the `-p` parameter.
