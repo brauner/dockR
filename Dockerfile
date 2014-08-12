@@ -17,14 +17,19 @@ RUN apt-get install -y software-properties-common
 RUN apt-get install -y --no-install-recommends less
 RUN apt-get install -y --no-install-recommends wget
 RUN apt-get install -y --no-install-recommends littler
+
+# ssh dependencies and X11-forwarding tools
 RUN apt-get install -y --no-install-recommends ssh
 RUN apt-get install -y --no-install-recommends xauth
+
 RUN apt-get install -y --no-install-recommends rsync
+
+# Convenience
 RUN apt-get install -y --no-install-recommends mupdf
 RUN apt-get install -y --no-install-recommends vim
 
 # R recommended dependencies
-RUN apt-get install -y --no-install-recommends gcc g++ gfortran libblas-dev liblapack-dev tcl8.5-dev tk8.5-dev bison groff-base libncurses5-dev libreadline-dev debhelper texinfo libbz2-dev liblzma-dev libpcre3-dev xdg-utils zlib1g-dev libpng-dev libjpeg-dev libx11-dev libxt-dev x11proto-core-dev libpango1.0-dev libcairo2-dev libtiff5-dev xvfb xauth xfonts-base texlive-base texlive-latex-base texlive-generic-recommended texlive-fonts-recommended texlive-fonts-extra texlive-extra-utils texlive-latex-recommended texlive-latex-extra default-jdk mpack bash-completion subversion 
+RUN apt-get install -y --no-install-recommends gcc g++ gfortran libblas-dev liblapack-dev tcl8.5-dev tk8.5-dev bison groff-base libncurses5-dev libreadline-dev debhelper texinfo libbz2-dev liblzma-dev libpcre3-dev xdg-utils zlib1g-dev libpng-dev libjpeg-dev libx11-dev libxt-dev x11proto-core-dev libpango1.0-dev libcairo2-dev libtiff5-dev xvfb xauth xfonts-base texlive-base texlive-latex-base texlive-generic-recommended texlive-fonts-recommended texlive-fonts-extra texlive-extra-utils texlive-latex-recommended texlive-latex-extra default-jdk mpack bash-completion subversion libgnutls-dev
 
 # R devel branch
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
