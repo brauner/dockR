@@ -2,7 +2,8 @@ docker-ubuntu-r
 ===============
 
 Ubuntu image intended for dockerized R development.
-Some properties:
+
+### Some properties:
 
 * Sets up `user` (with sudo rights) so that the container does not need to
   run as root.
