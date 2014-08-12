@@ -83,30 +83,20 @@ Ubuntu image intended for dockerized R development.
 
 4. Edit `/etc/ssh/ssh_config` by including:
 
-   `Host ssd
-
+   ```
+   Host ssd
    HostName localhost
-
    Port 5000
-
    User yourusername
-
    ForwardX11 yes
-
    ForwardX11Trusted yes
-
    RhostsRSAAuthentication yes
-
    RSAAuthentication no
-
    ControlMaster auto
-
    ControlPersist yes
-
    ControlPath ~/.ssh/socket-%r@%h:%p
-
    Compression yes
-   `
+   ```
 
    Once this is done you can use
 
