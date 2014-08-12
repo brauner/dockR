@@ -52,3 +52,55 @@ Ubuntu image intended for dockerized R development.
    pdfs and so on.). If the port `22` is mapped to another port but the
    connection is refused on that port. Try the default port `22`. Hence,
    try `ssh -X chbr@172.17.0.80` without specifying the `-p` parameter.
+
+### Avoiding the dynamic-ip-problem.
+
+1. What is the dynamic-ip-problem?
+
+   Docker assigns a dynamic ip to every container which can change with
+   every login, startup etc. Hence, you would need to run `docker inspect
+   inser-your-container-name-here` on every one of your container. This is
+   bad!
+   
+2. I can think of one possible solution. Build the image as explained
+   under 1. in `Small how-to-`ssh`-into-docker-container` But then start
+   up the container with
+
+   * `docker run -d -p 127.0.0.1:5000:22 -P --name="ssd" ubuntu-r`
+   
+   The `-p``parameter allows to publish a specific port of the `container`
+   to a port of the `host`. In our case we publish the containers port
+   `22` to the hosts port `5000`. This setting will persist if you stop
+   and start or restart your container.
+
+3. You can then use
+
+   * `ssh -X yourusername@localhost -p 5000`
+
+   to `ssh` into your container or create an alias for this command in
+   your `.bashrc` file on the `host` or follow the solution outlined in
+   the following.
+
+4. Edit `/etc/ssh/ssh_config` by including:
+
+   ```Host insert-your-containername-here
+   HostName localhost
+   Port 5000
+   User yourusername
+   ForwardX11 yes
+   ForwardX11Trusted yes
+   RhostsRSAAuthentication yes
+   RSAAuthentication no
+   ControlMaster auto
+   ControlPersist yes
+   ControlPath ~/.ssh/socket-%r@%h:%p
+   Compression yes
+   ```
+
+   Once this is done you can use
+
+   * `ssh inser-your-containername-here`
+   
+   to `ssh` into your container.
+
+
