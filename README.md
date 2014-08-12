@@ -33,6 +33,7 @@ Ubuntu image intended for dockerized R development.
 
 3. Find `ip` and `port` of container. One option is to use
    * `docker inspect ssd`.
+
    It will give you all low-level information about your container
    including `ip` and the `port` to which the standard port `22` is mapped
    on the host. (This is done so that you can have multiple containers
