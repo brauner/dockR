@@ -58,6 +58,9 @@ ENV HOME /home/chbr
 ENV HOSTNAME ubuntu-r
 RUN cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\nlibrary(setwidth)" > /home/chbr/.Rprofile
 RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc
+RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
+
+set keymap vi-command
 
 # Make ssh daemon run when container is started from this image
 RUN mkdir /var/run/sshd
