@@ -35,7 +35,11 @@ Small how-to-`ssh`-into-docker-container:
 4. Actually `ssh` into your container as `user` (`root`-login is not
    allowed!):
    * `ssh -X yourusername@ip-adress-you-found-out -p
-   port-number-you-found-out` e. g.
+   port-number-you-found-out`
+
+   e. g.
+
    * `ssh -X chbr@172.17.0.80 -p 49154`.
+
    The `-X` flag sets up `X11`-forwarding (So that you can see plots and
    pdfs and so on.).
