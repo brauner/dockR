@@ -63,12 +63,12 @@ Ubuntu image intended for dockerized R development.
    bad!
    
 2. I can think of one possible solution. Build the image as explained
-   under 1. in `Small how-to-`ssh`-into-docker-container` But then start
-   up the container with
+   under 1. in `Small how-to-ssh-into-docker-container`. But then start up
+   the container with
 
    * `docker run -d -p 127.0.0.1:5000:22 -P --name="ssd" ubuntu-r`
    
-   The `-p``parameter allows to publish a specific port of the `container`
+   The `-p` parameter allows to publish a specific port of the `container`
    to a port of the `host`. In our case we publish the containers port
    `22` to the hosts port `5000`. This setting will persist if you stop
    and start or restart your container.
@@ -83,19 +83,30 @@ Ubuntu image intended for dockerized R development.
 
 4. Edit `/etc/ssh/ssh_config` by including:
 
-   ```Host insert-your-containername-here
+   `Host ssd
+
    HostName localhost
+
    Port 5000
+
    User yourusername
+
    ForwardX11 yes
+
    ForwardX11Trusted yes
+
    RhostsRSAAuthentication yes
+
    RSAAuthentication no
+
    ControlMaster auto
+
    ControlPersist yes
+
    ControlPath ~/.ssh/socket-%r@%h:%p
+
    Compression yes
-   ```
+   `
 
    Once this is done you can use
 
