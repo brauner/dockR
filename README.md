@@ -81,7 +81,7 @@ Ubuntu image intended for dockerized R development.
    your `.bashrc` file on the `host` or follow the solution outlined in
    the following.
 
-4. Edit `/etc/ssh/ssh_config` by including:
+4. Edit `/etc/ssh/ssh_config` on the host by including:
 
    ```
    Host ssd
@@ -100,7 +100,7 @@ Ubuntu image intended for dockerized R development.
 
    Once this is done you can use
 
-   * `ssh inser-your-containername-here`
+   * `ssh ssd`
    
    to `ssh` into your container.
 
