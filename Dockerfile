@@ -7,9 +7,6 @@ RUN locale-gen en_GB.UTF-8
 ENV LANG en_GB.UTF-8
 ENV LANGUAGE en_GB:en
 ENV LC_ALL en_GB.UTF-8
-ENV LC_TIME de_DE.UTF-8
-ENV LC_PAPER de_DE.UTF-8
-ENV LC_MONETARY de_DE.UTF-8
 
 RUN apt-get update -qq
 RUN apt-get dist-upgrade -y
