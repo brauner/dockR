@@ -95,7 +95,6 @@ Ubuntu image intended for dockerized R development.
    ControlMaster auto
    ControlPersist yes
    ControlPath ~/.ssh/socket-%r@%h:%p
-   Compression yes
    ```
 
    Once this is done you can use
