@@ -63,7 +63,7 @@ RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.in
 RUN mkdir /var/run/sshd
 RUN mkdir -p /var/log/supervisor
 
-# copy servisord.conf which lists the processes to be spawned one this
+# copy servisord.conf which lists the processes to be spawned once this
 # container is started
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
