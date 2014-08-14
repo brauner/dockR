@@ -8,8 +8,12 @@ MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 # ENV LANGUAGE en_GB:en
 # ENV LC_ALL en_GB.UTF-8
 
+# Update repos
 RUN apt-get update -qq
+# Run full system upgrade
 RUN apt-get dist-upgrade -y
+
+# Install some tools to make life with R easier
 RUN apt-get install -y software-properties-common
 RUN apt-get install -y --no-install-recommends less
 RUN apt-get install -y --no-install-recommends wget
@@ -19,10 +23,10 @@ RUN apt-get install -y --no-install-recommends littler
 RUN apt-get install -y --no-install-recommends ssh
 RUN apt-get install -y --no-install-recommends xauth
 
-# Enable running multiple processes (which we need since we will be runnings
-# sshd and R at the same time)
+# Needed in order to run multiple processes in one container.
 RUN apt-get install -y --no-install-recommends supervisor
 
+# Needed in order to download recommended R packages later on
 RUN apt-get install -y --no-install-recommends rsync
 
 # Convenience
@@ -47,17 +51,24 @@ RUN apt-get install -y --no-install-recommends libcurl4-gnutls-dev
 # For lme4 Github version
 RUN apt-get install -y --no-install-recommends lmodern
 
-# Set root passwd
+# Set root passwd; change passwd accordingly
 RUN echo "root:test" | chpasswd
 
-# Add user so that container does not run as root
+# Add user so that no root-login is required; change username and password
+# accordingly
 RUN useradd -m chbr
 RUN echo "chbr:test" | chpasswd
 RUN usermod -s /bin/bash chbr
 RUN usermod -aG sudo chbr
 ENV HOME /home/chbr
-RUN cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\nlibrary(setwidth)" > /home/chbr/.Rprofile
+
+# set standard repository to download packages from
+RUN cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))" > /home/chbr/.Rprofile
+
+# set vim as default editor; vi-editing mode for bash
 RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc
+
+# Set vi-editing mode for R
 RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 
 RUN mkdir /var/run/sshd
