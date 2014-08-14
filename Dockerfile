@@ -40,7 +40,7 @@ RUN apt-get install -y --no-install-recommends gcc g++ gfortran libblas-dev libl
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
 # R download recommended packages
 RUN cd /tmp/R-devel && tools/rsync-recommended
-# R set maximum width for R output higher than 10000
+# # R set maximum width for R output higher than 10000
 # RUN cd /tmp/R-devel/src/include/ && sed -i "s/10000/200000/" Print.h
 
 # Build and install
