@@ -38,7 +38,10 @@ RUN apt-get install -y --no-install-recommends gcc g++ gfortran libblas-dev libl
 
 # R devel branch
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
+# R download recommended packages
 RUN cd /tmp/R-devel && tools/rsync-recommended
+# R set maximum width for R output higher than 10000
+RUN cd /tmp/R-devel/src/include/ && sed -i "s/10000/200000/" Print.h
 
 # Build and install
 RUN cd /tmp/R-devel && R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" R_BROWSER=xdg-open R_PDFVIEWER=mupdf PAGER=/usr/bin/pager PERL=/usr/bin/perl R_UNZIPCMD=/usr/bin/unzip R_ZIPCMD=/usr/bin/zip R_PRINTCMD=/usr/bin/lpr LIBnn=lib AWK=/usr/bin/awk CFLAGS="-pipe -std=gnu99 -Wall -pedantic -O3" CXXFLAGS="-pipe -Wall -pedantic -O3" ./configure
