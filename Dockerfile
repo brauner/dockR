@@ -2,10 +2,6 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-# Change to your needs
-RUN locale-gen en_IE.UTF-8
-ENV LANG en_IE.UTF-8
-
 RUN apt-get update -qq
 RUN apt-get dist-upgrade -y
 RUN apt-get install -y software-properties-common
