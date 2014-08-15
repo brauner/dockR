@@ -19,12 +19,12 @@ RUN apt-get install -y --no-install-recommends less
 RUN apt-get install -y --no-install-recommends wget
 RUN apt-get install -y --no-install-recommends littler
 
-# ssh dependencies and X11-forwarding tools
-RUN apt-get install -y --no-install-recommends ssh
+# # ssh dependencies and X11-forwarding tools
+# RUN apt-get install -y --no-install-recommends ssh
 RUN apt-get install -y --no-install-recommends xauth
 
-# Needed in order to run multiple processes in one container.
-RUN apt-get install -y --no-install-recommends supervisor
+# # Needed in order to run multiple processes in one container.
+# RUN apt-get install -y --no-install-recommends supervisor
 
 # Needed in order to download recommended R packages later on
 RUN apt-get install -y --no-install-recommends rsync
@@ -74,12 +74,12 @@ RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *
 # Set vi-editing mode for R
 RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 
-RUN mkdir /var/run/sshd
-RUN mkdir -p /var/log/supervisor
-
-# copy servisord.conf which lists the processes to be spawned once this
-# container is started
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-EXPOSE 22
-CMD ["/usr/bin/supervisord"]
+# RUN mkdir /var/run/sshd
+# RUN mkdir -p /var/log/supervisor
+# 
+# # copy servisord.conf which lists the processes to be spawned once this
+# # container is started
+# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# 
+# EXPOSE 22
+# CMD ["/usr/bin/supervisord"]
