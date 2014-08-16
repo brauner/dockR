@@ -13,9 +13,6 @@ RUN apt-get install -y --no-install-recommends less
 RUN apt-get install -y --no-install-recommends wget
 RUN apt-get install -y --no-install-recommends littler
 
-# # ssh dependencies and X11-forwarding tools
-RUN apt-get install -y --no-install-recommends xauth
-
 # Needed in order to download recommended R packages later on
 RUN apt-get install -y --no-install-recommends rsync
 
@@ -72,7 +69,21 @@ RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
 RUN cd /tmp/R-devel && tools/rsync-recommended
 
 # Build and install
-RUN cd /tmp/R-devel && R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" R_BROWSER=xdg-open R_PDFVIEWER=mupdf PAGER=/usr/bin/pager PERL=/usr/bin/perl R_UNZIPCMD=/usr/bin/unzip R_ZIPCMD=/usr/bin/zip R_PRINTCMD=/usr/bin/lpr LIBnn=lib AWK=/usr/bin/awk CFLAGS="-pipe -std=gnu99 -Wall -pedantic -O3" CXXFLAGS="-pipe -Wall -pedantic -O3" ./configure
+RUN cd /tmp/R-devel && R_PAPERSIZE=a4 \
+R_BATCHSAVE="--no-save --no-restore" \
+R_BROWSER=xdg-open \
+R_PDFVIEWER=mupdf \
+PAGER=/usr/bin/pager \
+PERL=/usr/bin/perl \
+R_UNZIPCMD=/usr/bin/unzip \
+R_ZIPCMD=/usr/bin/zip \
+R_PRINTCMD=/usr/bin/lpr \
+LIBnn=lib \
+AWK=/usr/bin/awk \
+CFLAGS="-pipe -std=gnu99 -Wall -pedantic -O3" \
+CXXFLAGS="-pipe -Wall -pedantic -O3" \
+./configure
+
 RUN cd /tmp/R-devel && make && make install
 
 # Adding some packages that are required by some R packages
@@ -85,6 +96,10 @@ RUN apt-get install -y --no-install-recommends lmodern
 # Set root passwd; change passwd accordingly
 RUN echo "root:test" | chpasswd
 
+# Change to your needs
+RUN locale-gen en_IE.UTF-8
+ENV LANG en_IE.UTF-8
+
 # Add user so that no root-login is required; change username and password
 # accordingly
 RUN useradd -m chbr
@@ -93,9 +108,10 @@ RUN usermod -s /bin/bash chbr
 RUN usermod -aG sudo chbr
 ENV HOME /home/chbr
 WORKDIR /home/chbr
+USER chbr
 
 # set standard repository to download packages from
-RUN cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))" > /home/chbr/.Rprofile
+RUN cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile
 
 # set vim as default editor; vi-editing mode for bash
 RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc
@@ -103,6 +119,4 @@ RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *
 # Set vi-editing mode for R
 RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 
-# Change to your needs
-RUN locale-gen en_IE.UTF-8
-ENV LANG en_IE.UTF-8
+CMD ["/usr/local/bin/R"]
