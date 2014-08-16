@@ -84,4 +84,5 @@ RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.in
 # EXPOSE 22
 # CMD ["/usr/bin/supervisord"]
 
-ENTRYPOINT ["/usr/local/bin/R"]
+CMD ["R"]
+ENTRYPOINT ["/bin/bash"]
