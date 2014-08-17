@@ -9,59 +9,57 @@ RUN apt-get dist-upgrade -y
 
 # Install some tools to make life with R easier
 RUN apt-get install -y software-properties-common
-RUN apt-get install -y --no-install-recommends less
-RUN apt-get install -y --no-install-recommends wget
-RUN apt-get install -y --no-install-recommends littler
 
+RUN apt-get install -y --no-install-recommends less
+RUN apt-get install -y --no-install-recommends littler
+RUN apt-get install -y --no-install-recommends mupdf
 # Needed in order to download recommended R packages later on
 RUN apt-get install -y --no-install-recommends rsync
-
-# Convenience
-RUN apt-get install -y --no-install-recommends mupdf
 RUN apt-get install -y --no-install-recommends vim
+RUN apt-get install -y --no-install-recommends wget
 
 # R recommended dependencies
-RUN apt-get install -y --no-install-recommends gcc
-RUN apt-get install -y --no-install-recommends g++
-RUN apt-get install -y --no-install-recommends gfortran
-RUN apt-get install -y --no-install-recommends libblas-dev
-RUN apt-get install -y --no-install-recommends liblapack-dev
-RUN apt-get install -y --no-install-recommends tcl8.5-dev
-RUN apt-get install -y --no-install-recommends tk8.5-dev
+RUN apt-get install -y --no-install-recommends bash-completion
 RUN apt-get install -y --no-install-recommends bison
-RUN apt-get install -y --no-install-recommends groff-base
-RUN apt-get install -y --no-install-recommends libncurses5-dev
-RUN apt-get install -y --no-install-recommends libreadline-dev
 RUN apt-get install -y --no-install-recommends debhelper
-RUN apt-get install -y --no-install-recommends texinfo
+RUN apt-get install -y --no-install-recommends default-jdk
+RUN apt-get install -y --no-install-recommends g++
+RUN apt-get install -y --no-install-recommends gcc
+RUN apt-get install -y --no-install-recommends gfortran
+RUN apt-get install -y --no-install-recommends groff-base
+RUN apt-get install -y --no-install-recommends libblas-dev
 RUN apt-get install -y --no-install-recommends libbz2-dev
-RUN apt-get install -y --no-install-recommends liblzma-dev
-RUN apt-get install -y --no-install-recommends libpcre3-dev
-RUN apt-get install -y --no-install-recommends xdg-utils
-RUN apt-get install -y --no-install-recommends zlib1g-dev
-RUN apt-get install -y --no-install-recommends libpng-dev
+RUN apt-get install -y --no-install-recommends libcairo2-dev
 RUN apt-get install -y --no-install-recommends libjpeg-dev
+RUN apt-get install -y --no-install-recommends liblapack-dev
+RUN apt-get install -y --no-install-recommends liblzma-dev
+RUN apt-get install -y --no-install-recommends libncurses5-dev
+RUN apt-get install -y --no-install-recommends libpango1.0-dev
+RUN apt-get install -y --no-install-recommends libpcre3-dev
+RUN apt-get install -y --no-install-recommends libpng-dev
+RUN apt-get install -y --no-install-recommends libreadline-dev
+RUN apt-get install -y --no-install-recommends libtiff5-dev
 RUN apt-get install -y --no-install-recommends libx11-dev
 RUN apt-get install -y --no-install-recommends libxt-dev
-RUN apt-get install -y --no-install-recommends x11proto-core-dev
-RUN apt-get install -y --no-install-recommends libpango1.0-dev
-RUN apt-get install -y --no-install-recommends libcairo2-dev
-RUN apt-get install -y --no-install-recommends libtiff5-dev
-RUN apt-get install -y --no-install-recommends xvfb
-RUN apt-get install -y --no-install-recommends xauth
-RUN apt-get install -y --no-install-recommends xfonts-base
-RUN apt-get install -y --no-install-recommends texlive-base
-RUN apt-get install -y --no-install-recommends texlive-latex-base
-RUN apt-get install -y --no-install-recommends texlive-generic-recommended
-RUN apt-get install -y --no-install-recommends texlive-fonts-recommended
-RUN apt-get install -y --no-install-recommends texlive-fonts-extra
-RUN apt-get install -y --no-install-recommends texlive-extra-utils
-RUN apt-get install -y --no-install-recommends texlive-latex-recommended
-RUN apt-get install -y --no-install-recommends texlive-latex-extra
-RUN apt-get install -y --no-install-recommends default-jdk
 RUN apt-get install -y --no-install-recommends mpack
-RUN apt-get install -y --no-install-recommends bash-completion
 RUN apt-get install -y --no-install-recommends subversion
+RUN apt-get install -y --no-install-recommends tcl8.5-dev
+RUN apt-get install -y --no-install-recommends texinfo
+RUN apt-get install -y --no-install-recommends texlive-base
+RUN apt-get install -y --no-install-recommends texlive-extra-utils
+RUN apt-get install -y --no-install-recommends texlive-fonts-extra
+RUN apt-get install -y --no-install-recommends texlive-fonts-recommended
+RUN apt-get install -y --no-install-recommends texlive-generic-recommended
+RUN apt-get install -y --no-install-recommends texlive-latex-base
+RUN apt-get install -y --no-install-recommends texlive-latex-extra
+RUN apt-get install -y --no-install-recommends texlive-latex-recommended
+RUN apt-get install -y --no-install-recommends tk8.5-dev
+RUN apt-get install -y --no-install-recommends x11proto-core-dev
+RUN apt-get install -y --no-install-recommends xauth
+RUN apt-get install -y --no-install-recommends xdg-utils
+RUN apt-get install -y --no-install-recommends xfonts-base
+RUN apt-get install -y --no-install-recommends xvfb
+RUN apt-get install -y --no-install-recommends zlib1g-dev
  
 # R devel branch
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
@@ -89,7 +87,6 @@ RUN cd /tmp/R-devel && make && make install
 # Adding some packages that are required by some R packages
 # For R devtools
 RUN apt-get install -y --no-install-recommends libcurl4-gnutls-dev
-
 # For lme4 Github version
 RUN apt-get install -y --no-install-recommends lmodern
 
