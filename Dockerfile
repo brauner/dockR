@@ -23,8 +23,8 @@ RUN apt-get install -y --no-install-recommends bash-completion
 RUN apt-get install -y --no-install-recommends bison
 RUN apt-get install -y --no-install-recommends debhelper
 RUN apt-get install -y --no-install-recommends default-jdk
-RUN apt-get install -y --no-install-recommends g++
 RUN apt-get install -y --no-install-recommends gcc
+RUN apt-get install -y --no-install-recommends g++
 RUN apt-get install -y --no-install-recommends gfortran
 RUN apt-get install -y --no-install-recommends groff-base
 RUN apt-get install -y --no-install-recommends libblas-dev
