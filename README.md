@@ -63,3 +63,14 @@ container. Last but not least there is always the more complex solution of
 using `xauth` and `.Xauthority` files to grant access to the `X11` socket
 (see `man xauth`). This however will also involve a little more knowledge
 how `X` works.
+
+### Entering a running container with `nsenter`
+
+Should you need to enter a running container with a new `tty` you should
+use nsenter. First find the `PID` of the (main) process running in the
+container by either issuing `docker top containername` or `docker inspect
+--format {{.State.Pid}} containername`. Then use `nsenter` which should
+usually be installed on your system. If not install it. It can be found
+`util-linux` (version must be at least `2.23`). You can use the command
+`nsenter --target PID-you-just-found-out --mount --ipc --net --pid` or the
+short version `nsenter -t PID-you-just-found-out -m -i -n -p`.
