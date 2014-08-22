@@ -116,4 +116,5 @@ RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *
 # Set vi-editing mode for R
 RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 
-CMD ["/usr/local/bin/R"]
+CMD []
+ENTRYPOINT ["/usr/local/bin/R"]
