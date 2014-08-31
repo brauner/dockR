@@ -7,7 +7,7 @@ RUN apt-get update -qq
 # Run full system upgrade
 RUN apt-get dist-upgrade -y
 
-# Install some tools to make life with R easier
+# Install some tools
 RUN apt-get install -y software-properties-common
 
 RUN apt-get install -y --no-install-recommends less
@@ -17,6 +17,15 @@ RUN apt-get install -y --no-install-recommends mupdf
 RUN apt-get install -y --no-install-recommends rsync
 RUN apt-get install -y --no-install-recommends vim
 RUN apt-get install -y --no-install-recommends wget
+
+# 3D support through /dev/dri
+RUN apt-get install -y --no-install-recommends mesa-utils
+# put appropriate dirver for your distribution here:
+RUN apt-get install -y --no-install-recommends i965-va-driver
+RUN apt-get install -y --no-install-recommends libegl1-mesa
+RUN apt-get install -y --no-install-recommends libgl1-mesa-dri
+RUN apt-get install -y --no-install-recommends libgl1-mesa-glx
+RUN apt-get install -y --no-install-recommends libopenvg1-mesa
 
 # R recommended dependencies
 RUN apt-get install -y --no-install-recommends bash-completion
