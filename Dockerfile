@@ -76,9 +76,7 @@ RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel
 RUN cd /tmp/R-devel && tools/rsync-recommended
 
 # Build and install
-RUN cd /tmp/R-devel && R_PAPERSIZE=a4 \
 RUN cd /tmp/R-devel && R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" R_BROWSER=xdg-open R_PDFVIEWER=mupdf PAGER=/usr/bin/less PERL=/usr/bin/perl R_UNZIPCMD=/usr/bin/unzip R_ZIPCMD=/usr/bin/zip R_PRINTCMD=/usr/bin/lpr LIBnn=lib AWK=/usr/bin/awk CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" ./configure
-
 RUN cd /tmp/R-devel && make && make install
 
 # Adding some packages that are required by some R packages
