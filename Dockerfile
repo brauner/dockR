@@ -89,8 +89,8 @@ LIBnn=lib \
 AWK=/usr/bin/awk \
 # Set your prefered options here. Most notably the -march flag. Otherwise you
 # will get into trouble running this on your system.
-CFLAGS="-march=ivybridge -pipe -std=gnu99 -Wall -pedantic -O3" \
-CXXFLAGS="-march=ivybridge -pipe -Wall -pedantic -O3" \
+CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
+CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
 ./configure
 
 RUN cd /tmp/R-devel && make && make install
