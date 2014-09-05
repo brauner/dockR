@@ -40,7 +40,9 @@ docker run -i -t --rm \
 --name="rdev" ubuntu-r1 R
 # --name="" specify the name of the container (here "rdev"); the image you
 # want to run the container from (here "ubuntu-r"); the process you want
-# to run in the container (here "R").
+# to run in the container (here "R"). Note that the process for this image
+(here "R") can be left unspecified as the program is the default
+entrypoint of the image.
 ```
 
 After issuing this command you should be looking at the beautiful `R`
