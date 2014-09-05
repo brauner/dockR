@@ -111,5 +111,7 @@ RUN cd && printf "# If not running interactively, don't do anything\n[[ \$- != *
 # Set vi-editing mode for R
 RUN cd && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 
+# Make R run as default process. This is for Docker 1.2 for Docker 1.3 this
+# will change and the CMD [] will not be needed anymore.
 CMD []
 ENTRYPOINT ["/usr/local/bin/R"]
