@@ -3,7 +3,7 @@ FROM ubuntu:latest
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 # Update repos
-RUN apt-get update -qq && RUN apt-get install -y \
+RUN apt-get update -qq && apt-get install -y \
     software-properties-common \
     && apt-get install -y --no-install-recommends less \
     littler \
