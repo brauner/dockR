@@ -8,19 +8,19 @@ RUN apt-get update -qq && apt-get install -y \
     && apt-get install -y --no-install-recommends less \
     littler \
     mupdf \
-    # Needed in order to download recommended R packages later on
+# Needed in order to download recommended R packages later on
     rsync \
     vim \
     wget \
-    # 3D support through /dev/dri
+# 3D support through /dev/dri
     mesa-utils \
-    # put appropriate dirver for your distribution here:
+# put appropriate dirver for your distribution here:
     i965-va-driver \
     libegl1-mesa \
     libgl1-mesa-dri \
     libgl1-mesa-glx \
     libopenvg1-mesa \
-    # R recommended dependencies
+# R recommended dependencies
     bash-completion \
     bison \
     debhelper \
@@ -62,18 +62,18 @@ RUN apt-get update -qq && apt-get install -y \
     xfonts-base \
     xvfb \
     zlib1g-dev \
-    # Adding some packages that are required by some R packages
-    # For R devtools
+# Adding some packages that are required by some R packages
+# For R devtools
     libcurl4-gnutls-dev \
-    # For lme4 Github version
+# For lme4 Github version
     lmodern
 
 
 # R devel branch
 RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel \
-    # R download recommended packages
+# R download recommended packages
     && cd /tmp/R-devel && tools/rsync-recommended \
-    # Build and install
+# Build and install
     && cd /tmp/R-devel && R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" \
     R_BROWSER=xdg-open \
     R_PDFVIEWER=mupdf \
@@ -97,11 +97,11 @@ RUN echo "root:test" | chpasswd \
     && usermod -s /bin/bash chbr \
     && usermod -aG sudo chbr \
     && locale-gen en_IE.UTF-8 \
-    # set standard repository to download packages from
+# set standard repository to download packages from
     cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile \
-    # set vim as default editor; vi-editing mode for bash
+# set vim as default editor; vi-editing mode for bash
     && cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc \
-    # Set vi-editing mode for R
+# Set vi-editing mode for R
     && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
 ENV LANG en_IE.UTF-8
 ENV HOME /home/chbr
