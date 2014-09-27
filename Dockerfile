@@ -98,7 +98,7 @@ RUN echo "root:test" | chpasswd \
     && usermod -s /bin/bash chbr \
     && usermod -aG sudo chbr \
     && locale-gen en_IE.UTF-8 \
- # set standard repository to download packages from
+# set standard repository to download packages from
     && cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile \
 # set vim as default editor; vi-editing mode for bash
     && cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc \
