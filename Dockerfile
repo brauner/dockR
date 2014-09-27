@@ -5,7 +5,8 @@ MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 # Update repos
 RUN apt-get update -qq && apt-get install -y \
     software-properties-common \
-    && apt-get install -y --no-install-recommends less \
+    && apt-get install -y --no-install-recommends \
+    less \
     littler \
     mupdf \
 # Needed in order to download recommended R packages later on
