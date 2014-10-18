@@ -101,7 +101,7 @@ RUN echo "root:test" | chpasswd \
 # video on ubuntun in order to allow access to video devices then I add them to
 # the container.
     && groupmod -g 91 video \
-    && usermod -aG 91 video \
+    && usermod -aG video chbr \
     && locale-gen en_IE.UTF-8 \
 # set standard repository to download packages from
     && cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile \
