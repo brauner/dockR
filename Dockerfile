@@ -97,6 +97,11 @@ RUN echo "root:test" | chpasswd \
     && echo "chbr:test" | chpasswd \
     && usermod -s /bin/bash chbr \
     && usermod -aG sudo chbr \
+# On my system the gid of group video is 91. I need to change gid of group
+# video on ubuntun in order to allow access to video devices then I add them to
+# the container.
+    && groupmod -g 91 video \
+    && usermod -aG 91 video \
     && locale-gen en_IE.UTF-8 \
 # set standard repository to download packages from
     && cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile \
