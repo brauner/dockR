@@ -93,26 +93,26 @@ RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel \
 # Add user so that no root-login is required; change username and password
 # accordingly
 RUN echo "root:test" | chpasswd \
-    && useradd -m chbr \
-    && echo "chbr:test" | chpasswd \
-    && usermod -s /bin/bash chbr \
-    && usermod -aG sudo chbr \
+    && useradd -m chbrd \
+    && echo "chbrd:test" | chpasswd \
+    && usermod -s /bin/bash chbrd \
+    && usermod -aG sudo chbrd \
 # On my system the gid of group video is 91. I need to change gid of group
 # video on ubuntun in order to allow access to video devices then I add them to
 # the container.
     && groupmod -g 91 video \
-    && usermod -aG video chbr \
+    && usermod -aG video chbrd \
     && locale-gen en_IE.UTF-8 \
 # set standard repository to download packages from
-    && cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbr/.Rprofile \
+    && cd && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/chbrd/.Rprofile \
 # set vim as default editor; vi-editing mode for bash
-    && cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbr/.bashrc \
+    && cd && printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/chbrd/.bashrc \
 # Set vi-editing mode for R
-    && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbr/.inputrc
+    && printf "set editing-mode vi\n\nset keymap vi-command" > /home/chbrd/.inputrc
 ENV LANG en_IE.UTF-8
-ENV HOME /home/chbr
-WORKDIR /home/chbr
-USER chbr
+ENV HOME /home/chbrd
+WORKDIR /home/chbrd
+USER chbrd
 
 # Make R run as default process.
 ENTRYPOINT ["/usr/local/bin/R"]
