@@ -88,7 +88,7 @@ RUN cd /tmp && svn co http://svn.r-project.org/R/trunk R-devel \
     CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
     CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
     ./configure \
-    && cd /tmp/R-devel && make && make install
+    && cd /tmp/R-devel && make && make install && make distclean
 
 # Add user so that no root-login is required; change username and password
 # accordingly
