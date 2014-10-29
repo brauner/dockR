@@ -55,7 +55,7 @@ RUN apt-get update -qq \
    xdg-utils \
    xfonts-base \
    xvfb \
-   zlib1g-dev \
+   zlib1g-dev
 
 # R patched branch
 RUN cd /tmp \
