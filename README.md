@@ -1,16 +1,28 @@
 docker-ubuntu-r
 ===============
 
-Ubuntu image intended for dockerized R development.
+`Docker` images for `R` based on the official `Ubuntu` minimal build.  The
+images have `R` set as their default entrypoint. Hence, they behave like
+`R` binaries.
 
 ### Some properties
 
-* Sets up `user` (with sudo rights) so that the container does not need to
+* All images are available as automated builds from `Docker Hub`. You can
+  just pull them with `docker pull lordgarbage/docker-ubuntu-r-patched`
+  and `docker pull lordgarbage/docker-ubuntu-r-devel`.
+* The generic `R` images which reside in the `r-patched` and `r-devel`
+  folders are compiled without setting the `march` flag. This will make
+  them run on any system. To see how to adapt the image to a specific
+  `architecture` by setting the `march` flag take a look at the
+  `Dockerfiles` which reside in the folders which have `_sandybridge`
+  appended to them. There you can also see how to enable `3D` support and
+  various other tweaks.
+* Set up `user` (with sudo rights) so that the container does not need to
   run as root.
-* Sets up `/home` for `user` and some basic options in `.Rprofile` and
-  `.bashrc` which should be changed to your own needs.
-* Installs all recommended `R` dependencies, pulls `R-devel` from `SVN` and
-  compiles `R-devel` from source.
+* Set up `/home` for `user` and a default repository in `.Rprofile`.
+* Install all recommended `R` dependencies, pull `R-patched` or `R-devel`
+  from `SVN` and compile `R-patched` or `R-devel` from source.
+* The `R` binaries reside in `/usr/local/bin/R`.
 
 There is a nice and semi-easy way of getting graphical output from a
 Docker container without having to run an sshd daemon inside of the
