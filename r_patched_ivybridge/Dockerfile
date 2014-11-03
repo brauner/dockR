@@ -90,8 +90,7 @@ RUN cd /tmp \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
-               --with-readline \
-               --with-recommended-packages
+               --with-readline
 && make \
 && make install \
 && rm -rf /tmp/R-patched
