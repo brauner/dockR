@@ -27,8 +27,8 @@ RUN apt-get update -qq \
    bison \
    debhelper \
    default-jdk \
-   gcc \
    g++ \
+   gcc \
    gfortran \
    groff-base \
    libblas-dev \
@@ -59,16 +59,14 @@ RUN apt-get update -qq \
    texlive-latex-recommended \
    tk8.5-dev \
    x11proto-core-dev \
-   xauth \
+#  xauth \
    xdg-utils \
    xfonts-base \
-   xvfb \
+#  xvfb \
    zlib1g-dev \
-# Adding some packages that are required by some R packages
-# For R devtools
+# For devtools
    libcurl4-gnutls-dev \
-# For lme4 Github version
-   lmodern
+&& apt-get clean
 
 # R devel branch
 RUN cd /tmp \
@@ -90,6 +88,9 @@ RUN cd /tmp \
    CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
    CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
    ./configure --enable-R-shlib \
+               --without-blas \
+               --without-lapack \
+               --with-readline \
 && make \
 && make install \
 && rm -rf /tmp/R-devel
