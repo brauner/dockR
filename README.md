@@ -14,7 +14,7 @@ images have `R` set as their default entrypoint. Hence, they behave like
   folders are compiled without setting the `march` flag. This will make
   them run on any system. To see how to adapt the image to a specific
   `architecture` by setting the `march` flag take a look at the
-  `Dockerfiles` which reside in the folders which have `_sandybridge`
+  `Dockerfiles` which reside in the folders which have `_ivybridge`
   appended to them. There you can also see how to enable `3D` support and
   various other tweaks.
 * Set up `user` (with sudo rights) so that the container does not need to
