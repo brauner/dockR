@@ -4,15 +4,15 @@ MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 # Update repos
 RUN apt-get update -qq \
-&& apt-get install -y \
-   software-properties-common \
+# && apt-get install -y \
+#  software-properties-common \
 && apt-get install -y --no-install-recommends \
    less \
    littler \
-   mupdf \
+#  mupdf \
 # Needed in order to download recommended R packages later on
-   rsync \
-   vim \
+#   rsync \
+   vim-tiny \
    wget \
 # 3D support through /dev/dri
    mesa-utils \
@@ -46,7 +46,6 @@ RUN apt-get update -qq \
    libx11-dev \
    libxt-dev \
    mpack \
-   subversion \
    tcl8.5-dev \
    texinfo \
    texlive-base \
@@ -69,13 +68,15 @@ RUN apt-get update -qq \
 && apt-get clean
 
 # R patched branch
-RUN cd /tmp \
+RUN apt-get install -y --no-install-recommends subversion \
+&& cd /tmp \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
 # R download recommended packages
 && cd /tmp/R-patched \
-&& tools/rsync-recommended \
+# && tools/rsync-recommended \
 # Build and install
-&& R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" \
+&& R_PAPERSIZE=a4 \
+   R_BATCHSAVE="--no-save --no-restore" \
    R_BROWSER=xdg-open \
    R_PDFVIEWER=mupdf \
    PAGER=/usr/bin/less \
@@ -90,10 +91,13 @@ RUN cd /tmp \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
+               --without-recommended-packages \
                --with-readline \
 && make \
 && make install \
-&& rm -rf /tmp/R-patched
+&& rm -rf /tmp/R-patched \
+&& apt-get autoremove subversion \
+&& apt-get clean
 
 # Add user so that no root-login is required; change username and password
 # accordingly
