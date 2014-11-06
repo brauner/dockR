@@ -230,7 +230,7 @@ RUN apt-get install -y --no-install-recommends subversion \
    AWK=/usr/bin/awk \
    CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
    CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
-   FFLAGS="-march=core-avx-i -g -03" \
+#  FFLAGS="-march=core-avx-i -g -03" \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
