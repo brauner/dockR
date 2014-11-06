@@ -2,51 +2,167 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-# Update repos
 RUN apt-get update -qq \
-&& apt-get install -y \
-   software-properties-common \
 && apt-get install -y --no-install-recommends \
-   less \
-   littler \
-   mupdf \
-# Needed in order to download recommended R packages later on
-   rsync \
-   vim \
-   wget \
-# 3D support through /dev/dri
-   mesa-utils \
-# put appropriate driver for your distribution here:
-   i965-va-driver \
-   libegl1-mesa \
-   libgl1-mesa-dri \
-   libgl1-mesa-glx \
-   libopenvg1-mesa \
-# R recommended dependencies
-   bash-completion \
-   bison \
+   autoconf \
+   automake \
+   autotools-dev \
+   bsdmainutils \
+   binutils \
+   build-essential \
+   ca-certificates \
+   cdbs \
+   cpp \
+   cpp-4.8 \
    debhelper \
-   default-jdk \
+   dh-apparmor \
+   dh-translations \
+   dpkg-dev \
+   fontconfig \
+   fontconfig-config \
+   fonts-dejavu-core \
    g++ \
+   g++-4.8 \
    gcc \
+   gcc-4.8 \
+   gettext \
+   gettext-base \
    gfortran \
+   gfortran-4.8 \
    groff-base \
+   intltool \
+   intltool-debian \
+   libasan0 \
+   libasprintf0c2 \
+   libatomic1 \
    libblas-dev \
+   libblas3 \
    libbz2-dev \
-   libcairo2-dev \
+   libc-dev-bin \
+   libc6-dev \
+   libcairo2 \
+   libcloog-isl4 \
+   libcroco3 \
+   libdatrie1 \
+   libdpkg-perl \
+   libencode-locale-perl \
+   libfile-listing-perl \
+   libfontconfig1 \
+   libfreetype6 \
+   libgcc-4.8-dev \
+   libgfortran-4.8-dev \
+   libgfortran3 \
+   libglib2.0-0 \
+   libgmp10 \
+   libgomp1 \
+   libgraphite2-3 \
+   libharfbuzz0b \
+   libhtml-parser-perl \
+   libhtml-tagset-perl \
+   libhtml-tree-perl \
+   libhttp-cookies-perl \
+   libhttp-date-perl \
+   libhttp-message-perl \
+   libhttp-negotiate-perl \
+   libice6 \
+   libio-html-perl \
+   libio-socket-ssl-perl \
+   libisl10 \
+   libitm1 \
+   libjbig0 \
    libjpeg-dev \
+   libjpeg-turbo8 \
+   libjpeg-turbo8-dev \
+   libjpeg8 \
+   libjpeg8-dev \
    liblapack-dev \
-   liblzma-dev \
+   liblapack3 \
+   liblwp-mediatypes-perl \
+   liblwp-protocol-https-perl \
+   libmpc3 \
+   libmpfr4 \
    libncurses5-dev \
-   libpango1.0-dev \
+   libnet-http-perl \
+   libnet-ssleay-perl \
+   libpango-1.0-0 \
+   libpangocairo-1.0-0 \
+   libpangoft2-1.0-0 \
+   libpaper-utils \
+   libpaper1 \
    libpcre3-dev \
-   libpng-dev \
+   libpcrecpp0 \
+   libpipeline1 \
+   libpixman-1-0 \
+   libpng12-dev \
+   libpython-stdlib \
+   libpython2.7-minimal \
+   libpython2.7-stdlib \
+   libquadmath0 \
    libreadline-dev \
+   libreadline6-dev \
+   libsigsegv2 \
+   libsm6 \
+   libstdc++-4.8-dev \
+   libtcl8.5 \
+   libthai-data \
+   libthai0 \
+   libtiff5 \
+   libtimedate-perl \
+   libtinfo-dev \
+   libtk8.5 \
+   libtsan0 \
+   libunistring0 \
+   liburi-perl \
+   libwww-perl \
+   libwww-robotrules-perl \
+   libx11-6 \
+   libx11-data \
+   libxau6 \
+   libxcb-render0 \
+   libxcb-shm0 \
+   libxcb1 \
+   libxdmcp6 \
+   libxext6 \
+   libxft2 \
+   libxml-parser-perl \
+   libxml2 \
+   libxrender1 \
+   libxss1 \
+   libxt6 \
+   linux-libc-dev \
+   m4 \
+   make \
+   man-db \
+   openssl \
+   patch \
+   po-debconf \
+   python \
+   python-minimal \
+   python-scour \
+   python2.7 \
+   python2.7-minimal \
+   tcl8.5 \
+   tk8.5 \
+   unzip \
+   x11-common \
+   xdg-utils \
+   xz-utils \
+   zip \
+   zlib1g-dev \
+# further compile dependencies
+   bison \
+   default-jdk \
+   libicu-dev \
+   libcairo2-dev \
+   liblzma-dev \
+   libpango1.0-dev \
+   libpng-dev \
    libtiff5-dev \
    libx11-dev \
    libxt-dev \
+   mk-configure \
    mpack \
-   subversion \
+   realpath \
    tcl8.5-dev \
    texinfo \
    texlive-base \
@@ -59,23 +175,29 @@ RUN apt-get update -qq \
    texlive-latex-recommended \
    tk8.5-dev \
    x11proto-core-dev \
-#  xauth \
-   xdg-utils \
    xfonts-base \
-#  xvfb \
-   zlib1g-dev \
+# 3D support
+   mesa-utils \
+   i965-va-driver \
+   libegl1-mesa \
+   libgl1-mesa-dri \
+   libgl1-mesa-glx \
+   libopenvg1-mesa \
+# additional tools
+   bash-completion \
+   littler \
+   mupdf \
+   vim-tiny \
 # For devtools
    libcurl4-gnutls-dev \
 && apt-get clean
 
-# R devel branch
-RUN cd /tmp \
+RUN apt-get install -y --no-install-recommends subversion \
+&& cd /tmp \
 && svn co http://svn.r-project.org/R/trunk R-devel \
-# R download recommended packages
 && cd /tmp/R-devel \
-&& tools/rsync-recommended \
-# Build and install
-&& R_PAPERSIZE=a4 R_BATCHSAVE="--no-save --no-restore" \
+&& R_PAPERSIZE=a4 \
+   R_BATCHSAVE="--no-save --no-restore" \
    R_BROWSER=xdg-open \
    R_PDFVIEWER=mupdf \
    PAGER=/usr/bin/less \
@@ -90,20 +212,22 @@ RUN cd /tmp \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
+               --without-recommended-packages \
                --with-readline \
 && make \
 && make install \
-&& rm -rf /tmp/R-devel
+&& rm -rf /tmp/R-devel \
+&& apt-get autoremove -y subversion \
+&& apt-get clean
 
-# Add user so that no root-login is required; change username and password
-# accordingly
+# Add user
 RUN echo "root:test" | chpasswd \
 && useradd -m rdev \
 && echo "rdev:test" | chpasswd \
 && usermod -s /bin/bash rdev \
 && usermod -aG sudo rdev \
 # On my system the gid of group video is 91. I need to change gid of group
-# video on ubuntun in order to allow access to video devices then I add them to
+# video on ubuntu in order to allow access to video devices when I add them to
 # the container.
 && groupmod -g 91 video \
 && usermod -aG video rdev \
@@ -121,5 +245,4 @@ ENV HOME /home/rdev
 WORKDIR /home/rdev
 USER rdev
 
-# Make R run as default process.
 ENTRYPOINT ["/usr/local/bin/R"]
