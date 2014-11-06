@@ -7,45 +7,182 @@ RUN apt-get update -qq \
 # && apt-get install -y \
 #  software-properties-common \
 && apt-get install -y --no-install-recommends \
+   autoconf \
+   automake \
+   autotools-dev \
+   bsdmainutils \
+   build-essential \
+   ca-certificates \
+   cdbs \
+   cpp \
+   cpp-4.8 \
+   debhelper \
+   dh-apparmor \
+   dh-translations \
+   dpkg-dev \
+   fontconfig \
+   fontconfig-config \
+   fonts-dejavu-core \
+   g++ \
+   g++-4.8 \
+   gcc \
+   gcc-4.8 \
+   gettext \
+   gettext-base \
+   gfortran \
+   gfortran-4.8 \
+   groff-base \
+   intltool \
+   intltool-debian \
+   libasan0 \
+   libasprintf0c2 \
+   libatomic1 \
+   libblas-dev \
+   libblas3 \
+   libbz2-dev \
+   libc-dev-bin \
+   libc6-dev \
+   libcairo2 \
+   libcloog-isl4 \
+   libcroco3 \
+   libdatrie1 \
+   libdpkg-perl \
+   libencode-locale-perl \
+   libfile-listing-perl \
+   libfontconfig1 \
+   libfreetype6 \
+   libgcc-4.8-dev \
+   libgfortran-4.8-dev \
+   libgfortran3 \
+   libglib2.0-0 \
+   libgmp10 \
+   libgomp1 \
+   libgraphite2-3 \
+   libharfbuzz0b \
+   libhtml-parser-perl \
+   libhtml-tagset-perl \
+   libhtml-tree-perl \
+   libhttp-cookies-perl \
+   libhttp-date-perl \
+   libhttp-message-perl \
+   libhttp-negotiate-perl \
+   libice6 \
+   libio-html-perl \
+   libio-socket-ssl-perl \
+   libisl10 \
+   libitm1 \
+   libjbig0 \
+   libjpeg-dev \
+   libjpeg-turbo8 \
+   libjpeg-turbo8-dev \
+   libjpeg8 \
+   libjpeg8-dev \
+   liblapack-dev \
+   liblapack3 \
+   liblwp-mediatypes-perl \
+   liblwp-protocol-https-perl \
+   libmpc3 \
+   libmpfr4 \
+   libncurses5-dev \
+   libnet-http-perl \
+   libnet-ssleay-perl \
+   libpango-1.0-0 \
+   libpangocairo-1.0-0 \
+   libpangoft2-1.0-0 \
+   libpaper-utils \
+   libpaper1 \
+   libpcre3-dev \
+   libpcrecpp0 \
+   libpipeline1 \
+   libpixman-1-0 \
+   libpng12-dev \
+   libpython-stdlib \
+   libpython2.7-minimal \
+   libpython2.7-stdlib \
+   libquadmath0 \
+   libreadline-dev \
+   libreadline6-dev \
+   libsigsegv2 \
+   libsm6 \
+   libstdc++-4.8-dev \
+   libtcl8.5 \
+   libthai-data \
+   libthai0 \
+   libtiff5 \
+   libtimedate-perl \
+   libtinfo-dev \
+   libtk8.5 \
+   libtsan0 \
+   libunistring0 \
+   liburi-perl \
+   libwww-perl \
+   libwww-robotrules-perl \
+   libx11-6 \
+   libx11-data \
+   libxau6 \
+   libxcb-render0 \
+   libxcb-shm0 \
+   libxcb1 \
+   libxdmcp6 \
+   libxext6 \
+   libxft2 \
+   libxml-parser-perl \
+   libxml2 \
+   libxrender1 \
+   libxss1 \
+   libxt6 \
+   linux-libc-dev \
+   m4 \
+   make \
+   man-db \
+   openssl \
+   patch \
+   po-debconf \
+   python \
+   python-minimal \
+   python-scour \
+   python2.7 \
+   python2.7-minimal \
+   tcl8.5 \
+   tk8.5 \
+   unzip \
+   x11-common \
+   xdg-utils \
+   xz-utils \
+   zip \
+   zlib1g-dev \
+# -----------
    less \
    littler \
-#  mupdf \
+   mupdf \
 # Needed in order to download recommended R packages later on
 #   rsync \
    vim-tiny \
    wget \
-# 3D support through /dev/dri
-   mesa-utils \
-# put appropriate driver for your distribution here:
-   i965-va-driver \
-   libegl1-mesa \
-   libgl1-mesa-dri \
-   libgl1-mesa-glx \
-   libopenvg1-mesa \
 # R recommended dependencies
    bash-completion \
+# nm, ld, objdump, strip, ranlib
+   binutils \
+# ---------
    bison \
-   debhelper \
    default-jdk \
-   g++ \
-   gcc \
-   gfortran \
-   groff-base \
-   libblas-dev \
-   libbz2-dev \
+# ----------
+   icu-devtools \
+# ----------
    libcairo2-dev \
-   libjpeg-dev \
-   liblapack-dev \
    liblzma-dev \
-   libncurses5-dev \
    libpango1.0-dev \
-   libpcre3-dev \
    libpng-dev \
-   libreadline-dev \
    libtiff5-dev \
    libx11-dev \
    libxt-dev \
+#  ------------
+   mk-configure \
+# -------------
    mpack \
+# ---------
+   realpath \
+# ---------
    tcl8.5-dev \
    texinfo \
    texlive-base \
@@ -59,10 +196,15 @@ RUN apt-get update -qq \
    tk8.5-dev \
    x11proto-core-dev \
 #  xauth \
-   xdg-utils \
    xfonts-base \
 #  xvfb \
-   zlib1g-dev \
+# 3D support through /dev/dri
+   mesa-utils \
+   i965-va-driver \
+   libegl1-mesa \
+   libgl1-mesa-dri \
+   libgl1-mesa-glx \
+   libopenvg1-mesa \
 # For devtools
    libcurl4-gnutls-dev \
 && apt-get clean
@@ -88,6 +230,7 @@ RUN apt-get install -y --no-install-recommends subversion \
    AWK=/usr/bin/awk \
    CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
    CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
+   FFLAGS="-march=core-avx-i -g -03"
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
@@ -96,7 +239,7 @@ RUN apt-get install -y --no-install-recommends subversion \
 && make \
 && make install \
 && rm -rf /tmp/R-patched \
-&& apt-get autoremove subversion \
+&& apt-get autoremove -y subversion \
 && apt-get clean
 
 # Add user so that no root-login is required; change username and password
