@@ -2,15 +2,13 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-# Update repos
 RUN apt-get update -qq \
-# && apt-get install -y \
-#  software-properties-common \
 && apt-get install -y --no-install-recommends \
    autoconf \
    automake \
    autotools-dev \
    bsdmainutils \
+   binutils \
    build-essential \
    ca-certificates \
    cdbs \
@@ -151,24 +149,10 @@ RUN apt-get update -qq \
    xz-utils \
    zip \
    zlib1g-dev \
-# -----------
-   less \
-   littler \
-   mupdf \
-# Needed in order to download recommended R packages later on
-#   rsync \
-   vim-tiny \
-   wget \
-# R recommended dependencies
-   bash-completion \
-# nm, ld, objdump, strip, ranlib
-   binutils \
-# ---------
+# further compile dependencies
    bison \
    default-jdk \
-# ----------
    libicu-dev \
-# ----------
    libcairo2-dev \
    liblzma-dev \
    libpango1.0-dev \
@@ -176,13 +160,9 @@ RUN apt-get update -qq \
    libtiff5-dev \
    libx11-dev \
    libxt-dev \
-#  ------------
    mk-configure \
-# -------------
    mpack \
-# ---------
    realpath \
-# ---------
    tcl8.5-dev \
    texinfo \
    texlive-base \
@@ -195,28 +175,27 @@ RUN apt-get update -qq \
    texlive-latex-recommended \
    tk8.5-dev \
    x11proto-core-dev \
-#  xauth \
    xfonts-base \
-#  xvfb \
-# 3D support through /dev/dri
+# 3D support
    mesa-utils \
    i965-va-driver \
    libegl1-mesa \
    libgl1-mesa-dri \
    libgl1-mesa-glx \
    libopenvg1-mesa \
+# additional tools
+   bash-completion \
+   littler \
+   mupdf \
+   vim-tiny \
 # For devtools
    libcurl4-gnutls-dev \
 && apt-get clean
 
-# R patched branch
 RUN apt-get install -y --no-install-recommends subversion \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
-# R download recommended packages
 && cd /tmp/R-patched \
-# && tools/rsync-recommended \
-# Build and install
 && R_PAPERSIZE=a4 \
    R_BATCHSAVE="--no-save --no-restore" \
    R_BROWSER=xdg-open \
@@ -230,7 +209,6 @@ RUN apt-get install -y --no-install-recommends subversion \
    AWK=/usr/bin/awk \
    CFLAGS="-march=core-avx-i -pipe -std=gnu99 -Wall -pedantic -O3"  \
    CXXFLAGS="-march=core-avx-i -pipe -Wall -pedantic -O3" \
-#  FFLAGS="-march=core-avx-i -g -03" \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
@@ -242,20 +220,19 @@ RUN apt-get install -y --no-install-recommends subversion \
 && apt-get autoremove -y subversion \
 && apt-get clean
 
-# Add user so that no root-login is required; change username and password
-# accordingly
+# Add user
 RUN echo "root:test" | chpasswd \
 && useradd -m rpat \
 && echo "rpat:test" | chpasswd \
 && usermod -s /bin/bash rpat \
 && usermod -aG sudo rpat \
 # On my system the gid of group video is 91. I need to change gid of group
-# video on ubuntun in order to allow access to video devices then I add them to
+# video on ubuntu in order to allow access to video devices when I add them to
 # the container.
 && groupmod -g 91 video \
 && usermod -aG video rpat \
 && locale-gen en_IE.UTF-8 \
-# set standard repository to download packages from
+# set standard repository
 && cd \
 && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/rpat/.Rprofile \
 # set vim as default editor; vi-editing mode for bash
@@ -268,5 +245,4 @@ ENV HOME /home/rpat
 WORKDIR /home/rpat
 USER rpat
 
-# Make R run as default process.
 ENTRYPOINT ["/usr/local/bin/R"]
