@@ -167,7 +167,7 @@ RUN apt-get update -qq \
    bison \
    default-jdk \
 # ----------
-   icu-devtools \
+   libicu-dev \
 # ----------
    libcairo2-dev \
    liblzma-dev \
