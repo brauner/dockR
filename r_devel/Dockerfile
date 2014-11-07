@@ -186,9 +186,11 @@ RUN apt-get update -qq \
 && apt-get clean
 
 RUN apt-get install -y --no-install-recommends subversion \
+   rsync \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/trunk R-devel \
 && cd /tmp/R-devel \
+&& tools/rsync-recommended \
 && R_PAPERSIZE=a4 \
    R_BATCHSAVE="--no-save --no-restore" \
    R_BROWSER=xdg-open \
@@ -205,12 +207,12 @@ RUN apt-get install -y --no-install-recommends subversion \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
-               --without-recommended-packages \
                --with-readline \
 && make \
 && make install \
 && rm -rf /tmp/R-devel \
 && apt-get autoremove -y subversion \
+   rsync \
 && apt-get clean
 
 # Add user
