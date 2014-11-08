@@ -217,16 +217,17 @@ RUN apt-get install -y --no-install-recommends subversion \
 
 # Add user
 RUN echo "root:test" | chpasswd \
-&& useradd -m rdev \
-&& echo "rdev:rdev" | chpasswd \
-&& usermod -s /bin/bash rdev \
-&& usermod -aG sudo rdev \
+&& useradd -u 1000 -m docker \
+&& echo "docker:test" | chpasswd \
+&& usermod -s /bin/bash docker \
+&& usermod -a -G 100 docker \
+# && usermod -a -G sudo docker \
 # set standard repository
 && cd \
-&& printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/rdev/.Rprofile
+&& printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/docker/.Rprofile
 
-ENV HOME /home/rdev
-WORKDIR /home/rdev
-USER rdev
+ENV HOME /home/docker
+WORKDIR /home/docker
+USER docker
 
 ENTRYPOINT ["/usr/local/bin/R"]

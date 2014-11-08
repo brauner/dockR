@@ -183,6 +183,7 @@ RUN apt-get update -qq \
    libgl1-mesa-dri \
    libgl1-mesa-glx \
    libopenvg1-mesa \
+   libglu1-mesa-dev \
 # additional tools
    bash-completion \
    littler \
@@ -224,27 +225,28 @@ RUN apt-get install -y --no-install-recommends subversion \
 
 # Add user
 RUN echo "root:test" | chpasswd \
-&& useradd -m rpat \
-&& echo "rpat:test" | chpasswd \
-&& usermod -s /bin/bash rpat \
-&& usermod -aG sudo rpat \
+&& useradd -u 1000 -m docker \
+&& echo "docker:test" | chpasswd \
+&& usermod -s /bin/bash docker \
+&& usermod -a -G 100 docker \
+# && usermod -a -G sudo docker \
 # On my system the gid of group video is 91. I need to change gid of group
 # video on ubuntu in order to allow access to video devices when I add them to
 # the container.
 && groupmod -g 91 video \
-&& usermod -aG video rpat \
+&& usermod -a -G video docker \
 && locale-gen en_IE.UTF-8 \
 # set standard repository
 && cd \
-&& printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/rpat/.Rprofile \
+&& printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/docker/.Rprofile \
 # set vim as default editor; vi-editing mode for bash
-&& printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/rpat/.bashrc \
+&& printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/docker/.bashrc \
 # Set vi-editing mode for R
-&& printf "set editing-mode vi\n\nset keymap vi-command" > /home/rpat/.inputrc
+&& printf "set editing-mode vi\n\nset keymap vi-command" > /home/docker/.inputrc
 
 ENV LANG en_IE.UTF-8
-ENV HOME /home/rpat
-WORKDIR /home/rpat
-USER rpat
+ENV HOME /home/docker
+WORKDIR /home/docker
+USER docker
 
 ENTRYPOINT ["/usr/local/bin/R"]
