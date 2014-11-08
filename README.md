@@ -17,13 +17,42 @@ images have `R` set as their default entrypoint. Hence, they behave like
   `Dockerfiles` which reside in the folders which have `_ivybridge`
   appended to them. There you can also see how to enable `3D` support and
   various other tweaks.
-* Set up `user` (with sudo rights) so that the container does not need to
-  run as root.
+* Set up `user` so that the container does not need to run as root.
 * Set up `/home` for `user` and a default repository in `.Rprofile`.
 * Install all recommended `R` dependencies, pull `R-patched` or `R-devel`
   from `SVN` and compile `R-patched` or `R-devel` from source.
 * The `R` binaries reside in `/usr/local/bin/R`.
 
+### Workflow & R Library and Package Management
+If you mainly run `R` as an ephemeral interactive container and install
+new packages you will need to commit the newly created layer to your image
+before you quit in order to have the packages you install available via
+`library()` when you start the container again. To circumvent this I
+suggest sharing volumes between your `R` containers in the following
+manner:
+
+* Create an extremely tiny container from the `busybox` image exposing two
+  folders `R` and `R-dev` (for `devtools` afficionados) with the right
+  permissions which you share via the `--volumes-from=DATACONTAINERNAME`
+  flag among you `R` containers. You will find the `Dockerfile` for this
+  in the folder `libraries` and the image on `Docker Hub`.
+* Run `docker run --name=RDATA DATACONTAINERNAME true`
+* Run `docker run --volumes-from = RDATA RCONTAINERNAME`
+
+Now you can install packages into `RDATA` without having to commit the
+container as data containers are handled differently by Docker. If you
+pull a new `R` image you can just keep running it with your libraries
+still intact. Should a new `R` version come out that requires upgrading
+all libraries you can just remove your `RDATA` container which will also
+remove all installed packages and start a new one.
+
+* If you still want to install a package ephemerally which gets deleted
+  when your `R` container exits. You can use `devtools` `dev_mode()`
+  function to specify a new library path: `library(devtools); dev_mode(,
+  path = "~/your/path/to/new/library/here")` or edit `.libPaths()`
+  directly.
+
+### Graphical Output from Docker Containers
 There is a nice and semi-easy way of getting graphical output from a
 Docker container without having to run an sshd daemon inside of the
 container. Docker can provide bare metal performance when running a single
@@ -78,9 +107,16 @@ using `xauth` and `.Xauthority` files to grant access to the `X11` socket
 (see `man xauth`). This however will also involve a little more knowledge
 how `X` works.
 
+### Entering a running container with `docker exec`
+As of release `1.3.` the recommended way of entering a running container
+is by using `docker exec -it rdev bash` (`rdev` is the name of the running
+container  and `bash` the program which is supposed to be run in the
+container in this example.) which will spawn a new process in the running
+container.
+
 ### Entering a running container with `nsenter`
 
-Should you need to enter a running container with a new `tty` you should
+Should you need to enter a running container with a new `tty` you can also
 use nsenter. First find the `PID` of the (main) process running in the
 container by either issuing `docker top containername` or `docker inspect
 --format {{.State.Pid}} containername`. Then use `nsenter` which should
@@ -89,9 +125,3 @@ usually be installed on your system. If not install it. It can be found
 `nsenter --target PID-you-just-found-out --mount --ipc --net --pid` or the
 short version `nsenter -t PID-you-just-found-out -m -i -n -p`.
 
-### Entering a running container with `docker exec`
-As of release `1.3.` the recommended way of entering a running container
-is by using `docker exec -it rdev bash` (`rdev` is the name of the running
-container  and `bash` the program which is supposed to be run in the
-container in this example.) which will spawn a new process in the running
-container.
