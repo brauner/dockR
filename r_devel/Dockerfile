@@ -2,12 +2,20 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-RUN apt-get update -qq -y \
+RUN printf "path-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-exclude=/usr/share/man/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-include=/usr/share/man/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-include=/usr/share/man/man[1-9]/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-exclude=/usr/share/i18n/locales/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-include=/usr/share/i18n/locales/en_IE*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-exclude=/usr/share/i18n/charmaps/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "path-include=/usr/share/i18n/charmaps/UTF-8*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& apt-get update -qq -y \
 && apt-get build-dep -y r-base r-base-dev r-recommended \
 && apt-get install -y --no-install-recommends less \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/* \
-&& rm -rf /usr/share/locale/*
+&& rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends subversion \
