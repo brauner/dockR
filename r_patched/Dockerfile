@@ -2,12 +2,13 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-RUN apt-get update -qq -y \
-&& printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+RUN printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/locale/locale.alias" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-exclude=/usr/share/man/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-include=/usr/share/man/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-include=/usr/share/man/man[1-9]/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    less \
 && apt-get build-dep -y \
