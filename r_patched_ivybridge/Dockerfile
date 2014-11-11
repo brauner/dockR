@@ -4,24 +4,29 @@ MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN printf "\ndeb http://ftp.de.debian.org/debian testing main contrib non-free\n deb-src http://ftp.de.debian.org/debian testing main contrib non-free\n\n deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free\n deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free\n\n deb http://security.debian.org/ jessie/updates main contrib non-free\n deb-src http://security.debian.org/ jessie/updates main contrib non-free\n" > etc/apt/sources.list \
 && export DEBIAN_FRONTEND=noninteractive \
-&& printf "path-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-exclude=/usr/share/man/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-include=/usr/share/man/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-include=/usr/share/man/man[1-9]/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-exclude=/usr/share/i18n/locales/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-include=/usr/share/i18n/locales/en_IE*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-exclude=/usr/share/i18n/charmaps/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "path-include=/usr/share/i18n/charmaps/UTF-8*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-exclude=/usr/share/man/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/man/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/man/man[1-9]/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-exclude=/usr/share/i18n/locales/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/i18n/locales/en_IE*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-exclude=/usr/share/i18n/charmaps/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf "\npath-include=/usr/share/i18n/charmaps/UTF-8*\n" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && apt-get update -qq -y \
-&& apt-get build-dep -y r-base r-base-dev r-recommended \
-&& apt-get install -y --no-install-recommends less \
-&& apt-get install -y --no-install-recommends locales \
+&& apt-get install -y --no-install-recommends \
+   locales \
+   less \
+&& apt-get build-dep -y \ 
+   r-base \
+   r-base-dev \
+   r-recommended \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update -qq -y \
-&& apt-get install -y --no-install-recommends subversion \
+&& apt-get install -y --no-install-recommends \
+   subversion \
    rsync \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
@@ -47,7 +52,8 @@ RUN apt-get update -qq -y \
 && make \
 && make install \
 && rm -rf /tmp/R-patched \
-&& apt-get autoremove -y subversion \
+&& apt-get autoremove -y \
+   subversion \
    rsync \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
