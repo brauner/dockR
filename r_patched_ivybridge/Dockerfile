@@ -7,10 +7,13 @@ RUN printf "\ndeb http://ftp.de.debian.org/debian testing main contrib non-free\
 && apt-get update -qq \
 && apt-get build-dep -y r-base r-base-dev r-recommended \
 && apt-get install -y --no-install-recommends less \
+&& apt-get install -y --no-install-recommends locales \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& rm -rf /var/lib/apt/lists/* \
+&& rm -rf /usr/share/locale/*
 
-RUN apt-get install -y --no-install-recommends subversion \
+RUN apt-get update -qq -y \
+&& apt-get install -y --no-install-recommends subversion \
    rsync \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
