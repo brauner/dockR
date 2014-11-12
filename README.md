@@ -1,4 +1,4 @@
-docker-ubuntu-r
+dockR
 ===============
 
 `Docker` images for `R` based on the official `Ubuntu` minimal build.  The
