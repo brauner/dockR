@@ -35,8 +35,8 @@ manner:
   folders `R` and `R-dev` (for `devtools` afficionados) with the right
   permissions which you share via the `--volumes-from=DATACONTAINERNAME`
   flag among you `R` containers. You will find the `Dockerfile` for this
-  in the folder `libraries` and the image on `Docker Hub`. You can pull it
-  with `docker pull lordgarbage/r-libraries`.
+  in the folder `rlib` and the image on `Docker Hub`. You can pull it
+  with `docker pull lordgarbage/rlib`.
 * Run `docker run --name=RDATA DATACONTAINERNAME true`
 * Run `docker run --volumes-from = RDATA RCONTAINERNAME`
 
