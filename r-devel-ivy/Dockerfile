@@ -40,8 +40,8 @@ RUN apt-get update -qq -y \
    R_PRINTCMD=/usr/bin/lpr \
    LIBnn=lib \
    AWK=/usr/bin/awk \
-   CFLAGS="-march=native -pipe -std=gnu99 -Wall -pedantic -O3"  \
-   CXXFLAGS="-march=native -pipe -Wall -pedantic -O3" \
+   CFLAGS="-march=ivybridge -pipe -std=gnu99 -Wall -pedantic -O3"  \
+   CXXFLAGS="-march=ivybridge -pipe -Wall -pedantic -O3" \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
