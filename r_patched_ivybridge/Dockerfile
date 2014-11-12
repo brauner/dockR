@@ -14,7 +14,7 @@ RUN printf "\ndeb http://ftp.de.debian.org/debian testing main contrib non-free\
 && apt-get install -y --no-install-recommends \
    locales \
    less \
-&& apt-get build-dep -y \ 
+&& apt-get build-dep -y \
    r-base \
    r-base-dev \
    r-recommended \
