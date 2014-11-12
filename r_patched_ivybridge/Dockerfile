@@ -48,6 +48,7 @@ RUN apt-get update -qq -y \
                --with-readline \
 && make \
 && make install \
+&& cd \
 && rm -rf /tmp/R-patched \
 && apt-get autoremove -y \
    subversion \
