@@ -68,7 +68,7 @@ RUN echo "root:test" | chpasswd \
 && groupmod -g 91 video \
 && usermod -a -G video docker \
 && printf "en_IE.UTF-8 UTF-8\n" >> etc/locale.gen \
-&& locale-gen en_IE.UTF-8 \
+&& locale-gen \
 # set standard repository
 && cd \
 && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/docker/.Rprofile \
