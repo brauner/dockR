@@ -1,4 +1,4 @@
-FROM debootstrap/debian:testing
+FROM lordgarbage/debian:testing
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
