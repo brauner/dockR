@@ -42,6 +42,8 @@ RUN apt-get update -qq -y \
    AWK=/usr/bin/awk \
    CFLAGS="-march=ivybridge -pipe -std=gnu99 -Wall -pedantic -O3"  \
    CXXFLAGS="-march=ivybridge -pipe -Wall -pedantic -O3" \
+   FFLAGS="-march=ivybridge -g -O3" \
+   FCFLAGS="-march=ivybridge -g -O3" \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
