@@ -8,8 +8,8 @@ images have `R` set as their default entrypoint. Hence, they behave like
 ### Some properties
 
 * All images are available as automated builds from `Docker Hub`. You can
-  just pull them with `docker pull lordgarbage/r-patched`
-  and `docker pull lordgarbage/r-devel`.
+  just pull them with `docker pull brauner/r-patched`
+  and `docker pull brauner/r-devel`.
 * The generic `R` images which reside in the `r-patched` and `r-devel`
   folders are compiled without setting the `march` flag. This will make
   them run on any system. To see how to adapt the image to a specific
@@ -36,7 +36,7 @@ manner:
   permissions which you share via the `--volumes-from=DATACONTAINERNAME`
   flag among you `R` containers. You will find the `Dockerfile` for this
   in the folder `rlib` and the image on `Docker Hub`. You can pull it
-  with `docker pull lordgarbage/rlib`.
+  with `docker pull brauner/rlib`.
 * Run `docker run --name=RDATA DATACONTAINERNAME true`
 * Run `docker run --volumes-from = RDATA RCONTAINERNAME`
 
