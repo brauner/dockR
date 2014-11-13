@@ -11,6 +11,8 @@ RUN printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    less \
+   zip \
+   unzip \
 && apt-get build-dep -y \
    r-base \
    r-base-dev \
