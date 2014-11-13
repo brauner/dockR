@@ -1,4 +1,4 @@
-FROM lordgarbage/debian:testing
+FROM brauner/debian:testing
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
@@ -14,6 +14,7 @@ RUN printf "\ndeb http://ftp.de.debian.org/debian testing main contrib non-free\
 && apt-get install -y --no-install-recommends \
    locales \
    less \
+   libcurl4-gnutls-dev \
    zip \
    unzip \
 && apt-get build-dep -y \
@@ -27,7 +28,6 @@ RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    subversion \
    rsync \
-   libcurl4-gnutls-dev \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/trunk R-devel \
 && cd /tmp/R-devel \
