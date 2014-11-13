@@ -25,6 +25,7 @@ RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    subversion \
    rsync \
+   libcurl4-gnutls-dev \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
 && cd /tmp/R-patched \

@@ -25,6 +25,7 @@ RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    subversion \
    rsync \
+   libcurl4-gnutls-dev \
 && cd /tmp \
 && svn co http://svn.r-project.org/R/trunk R-devel \
 && cd /tmp/R-devel \
