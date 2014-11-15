@@ -63,7 +63,6 @@ RUN apt-get update -qq -y \
    FFLAGS="-march=ivybridge -g -O3 -m64" \
    FCFLAGS="-march=ivybridge -g -O3 -m64" \
    ./configure --enable-R-shlib \
-               --enable-BLAS-shlib \
                --without-blas \
                --without-lapack \
                --with-readline \
