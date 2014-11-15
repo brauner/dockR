@@ -98,9 +98,9 @@ RUN echo "root:test" | chpasswd \
 && cd \
 && printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/docker/.Rprofile \
 # set vim as default editor; vi-editing mode for bash
-&& printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\n# Enable vi editing mode.\nset -o vi" > /home/docker/.bashrc \
+&& printf "# If not running interactively, don't do anything\n[[ \$- != *i* ]] && return\n\nalias ls='ls --color=auto'\n\nalias grep='grep --color=auto'\n\nPS1='[\u@\h \W]\\$ '\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n" > /home/docker/.bashrc \
 # Set vi-editing mode for R
-&& printf "set editing-mode vi\n\nset keymap vi-command" > /home/docker/.inputrc
+&& printf "set editing-mode vi\n\nset keymap vi-command\n" > /home/docker/.inputrc
 
 ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
