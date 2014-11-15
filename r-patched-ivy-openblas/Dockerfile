@@ -31,7 +31,7 @@ RUN apt-get update -qq -y \
 && git clone git://github.com/xianyi/OpenBLAS openblas \
 && cd /tmp/openblas \
 && make TARGET=SANDYBRIDGE \
-&& mv libopenblas_sandybridgep-r0.2.12.s0 /tmp \
+&& make install PREFIX=/usr/local/lib \
 && cd \
 && rm -rf /tmp/openblas \
 && apt-get clean \
@@ -73,7 +73,7 @@ RUN apt-get update -qq -y \
 && make install \
 && cd /usr/local/lib/R/lib \
 && mv libRblas.so libRblas.so.old \
-&& mv /tmp/libopenblas_sandybridgep-r0.2.12.s0 libRblas.so \
+&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.12.so libRblas.so \
 && cd \
 && rm -rf /tmp/R-patched \
 && apt-get autoremove -y \
