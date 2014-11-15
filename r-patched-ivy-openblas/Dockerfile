@@ -34,8 +34,6 @@ RUN apt-get update -qq -y \
 && make install PREFIX=/usr/local/lib \
 && cd \
 && rm -rf /tmp/openblas \
-&& apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
 && apt-get autoremove -y \
    git \
 && apt-get clean \
