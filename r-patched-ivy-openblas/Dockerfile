@@ -31,7 +31,7 @@ RUN apt-get update -qq -y \
 && git clone git://github.com/xianyi/OpenBLAS openblas \
 && cd /tmp/openblas \
 && make TARGET=SANDYBRIDGE \
-&& make install PREFIX=/usr/local/lib \
+&& make install PREFIX=/usr/local \
 && cd \
 && rm -rf /tmp/openblas \
 && apt-get autoremove -y \
