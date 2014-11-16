@@ -31,7 +31,7 @@ RUN apt-get update -qq -y \
 && git clone git://github.com/xianyi/OpenBLAS openblas \
 && cd /tmp/openblas \
 && make TARGET=SANDYBRIDGE \
-&& make install PREFIX=/usr/local \
+&& make install PREFIX=/usr/local/OpenBLAS \
 && cd \
 && rm -rf /tmp/openblas \
 && apt-get autoremove -y \
@@ -47,21 +47,21 @@ RUN apt-get update -qq -y \
 && svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
 && cd /tmp/R-patched \
 && tools/rsync-recommended \
-&& R_PAPERSIZE=a4 \
-   R_BATCHSAVE="--no-save --no-restore" \
-   R_BROWSER=xdg-open \
-   R_PDFVIEWER=mupdf \
-   PAGER=/usr/bin/less \
-   PERL=/usr/bin/perl \
-   R_UNZIPCMD=/usr/bin/unzip \
-   R_ZIPCMD=/usr/bin/zip \
-   R_PRINTCMD=/usr/bin/lpr \
-   LIBnn=lib \
-   AWK=/usr/bin/awk \
+&& AWK=/usr/bin/awk \
    CFLAGS="-march=ivybridge -pipe -std=gnu99 -Wall -pedantic -O3 -m64"  \
    CXXFLAGS="-march=ivybridge -pipe -Wall -pedantic -O3 -m64" \
    FFLAGS="-march=ivybridge -g -O3 -m64" \
    FCFLAGS="-march=ivybridge -g -O3 -m64" \
+   LIBnn=lib \
+   PAGER=/usr/bin/less \
+   PERL=/usr/bin/perl \
+   R_PAPERSIZE=a4 \
+   R_BATCHSAVE="--no-save --no-restore" \
+   R_BROWSER=xdg-open \
+   R_PDFVIEWER=mupdf \
+   R_UNZIPCMD=/usr/bin/unzip \
+   R_ZIPCMD=/usr/bin/zip \
+   R_PRINTCMD=/usr/bin/lpr \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
@@ -70,7 +70,7 @@ RUN apt-get update -qq -y \
 && make install \
 && cd /usr/local/lib/R/lib \
 && mv libRblas.so libRblas.so.old \
-&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.12.so libRblas.so \
+&& ln -s /usr/local/lib/OpenBLAS/libopenblas_sandybridgep-r0.2.12.so libRblas.so \
 && cd \
 && rm -rf /tmp/R-patched \
 && apt-get autoremove -y \
