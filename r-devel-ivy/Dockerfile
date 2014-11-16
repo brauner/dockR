@@ -2,8 +2,7 @@ FROM brauner/debian:testing
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-RUN printf "\ndeb http://ftp.de.debian.org/debian testing main contrib non-free\n deb-src http://ftp.de.debian.org/debian testing main contrib non-free\n\n deb http://ftp.debian.org/debian/ jessie-updates main contrib non-free\n deb-src http://ftp.debian.org/debian/ jessie-updates main contrib non-free\n\n deb http://security.debian.org/ jessie/updates main contrib non-free\n deb-src http://security.debian.org/ jessie/updates main contrib non-free\n" > etc/apt/sources.list \
-&& export DEBIAN_FRONTEND=noninteractive \
+RUN export DEBIAN_FRONTEND=noninteractive \
 && printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
 && printf "\npath-include=/usr/share/locale/locale.alias" >> /etc/dpkg/dpkg.cfg.d/excludes \
