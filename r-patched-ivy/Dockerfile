@@ -72,6 +72,8 @@ RUN echo "root:test" | chpasswd \
 # the container.
 && groupmod -g 91 video \
 && usermod -a -G video docker \
+&& groupmod -g 92 audio \
+&& usermod -a -G audio docker \
 && printf "\nen_IE.UTF-8 UTF-8\n" >> /etc/locale.gen \
 && locale-gen \
 # set standard repository
