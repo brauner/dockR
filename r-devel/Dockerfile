@@ -2,12 +2,12 @@ FROM ubuntu:latest
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
-RUN printf "\npath-exclude=/usr/share/locale/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "\npath-include=/usr/share/locale/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "\npath-include=/usr/share/locale/locale.alias" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "\npath-exclude=/usr/share/man/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "\npath-include=/usr/share/man/en*" >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf "\npath-include=/usr/share/man/man[1-9]/*" >> /etc/dpkg/dpkg.cfg.d/excludes \
+RUN printf '\npath-exclude=/usr/share/locale/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf '\npath-include=/usr/share/locale/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf '\npath-include=/usr/share/locale/locale.alias' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf '\npath-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf '\npath-include=/usr/share/man/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    less \
@@ -56,15 +56,15 @@ RUN apt-get update -qq -y \
 && rm -rf /var/lib/apt/lists/*
 
 # Add user
-RUN echo "root:test" | chpasswd \
+RUN echo 'root:test' | chpasswd \
 && useradd -u 1000 -m docker \
-&& echo "docker:test" | chpasswd \
+&& echo 'docker:test' | chpasswd \
 && usermod -s /bin/bash docker \
 && usermod -a -G 100 docker \
 # && usermod -a -G sudo docker \
 # set standard repository
 && cd \
-&& printf "options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n" > /home/docker/.Rprofile
+&& printf 'options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n' > /home/docker/.Rprofile
 
 ENV HOME /home/docker
 WORKDIR /home/docker
