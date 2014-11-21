@@ -64,7 +64,7 @@ RUN echo 'root:test' | chpasswd \
 # && usermod -a -G sudo docker \
 # set standard repository
 && cd \
-&& printf 'options(repos=structure(c(CRAN='http://stat.ethz.ch/CRAN/')))\n' > /home/docker/.Rprofile
+&& printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > /home/docker/.Rprofile \
 
 ENV HOME /home/docker
 WORKDIR /home/docker
