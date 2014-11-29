@@ -3,6 +3,7 @@ FROM brauner/debian:testing
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN export DEBIAN_FRONTEND=noninteractive \
+&& export DEBCONF_NONINTERACTIVE_SEEN=true \
 && cd /etc/dpkg/dpkg.cfg.d \
 && printf '\npath-exclude=/usr/share/locale/*' >> excludes \
 && printf '\npath-include=/usr/share/locale/en*' >> excludes \
