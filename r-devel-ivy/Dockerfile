@@ -3,12 +3,13 @@ FROM brauner/debian:testing
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-&& printf '\npath-exclude=/usr/share/locale/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/locale.alias' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& cd /etc/dpkg/dpkg.cfg.d \
+&& printf '\npath-exclude=/usr/share/locale/*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/en*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/locale.alias' >> excludes \
+&& printf '\npath-exclude=/usr/share/man/*' >> excludes \
+&& printf '\npath-include=/usr/share/man/en*' >> excludes \
+&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> excludes \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    locales \
@@ -21,7 +22,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    r-base-dev \
    r-recommended \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists \
+&& rm -rf *
 
 RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
@@ -31,34 +33,35 @@ RUN apt-get update -qq -y \
 && svn co http://svn.r-project.org/R/trunk R-devel \
 && cd /tmp/R-devel \
 && tools/rsync-recommended \
-&& R_PAPERSIZE=a4 \
-   R_BATCHSAVE="--no-save --no-restore" \
-   R_BROWSER=xdg-open \
-   R_PDFVIEWER=mupdf \
-   PAGER=/usr/bin/less \
-   PERL=/usr/bin/perl \
-   R_UNZIPCMD=/usr/bin/unzip \
-   R_ZIPCMD=/usr/bin/zip \
-   R_PRINTCMD=/usr/bin/lpr \
-   LIBnn=lib \
-   AWK=/usr/bin/awk \
+&& AWK=/usr/bin/awk \
    CFLAGS="-march=ivybridge -pipe -std=gnu99 -Wall -pedantic -O3 -m64"  \
    CXXFLAGS="-march=ivybridge -pipe -Wall -pedantic -O3 -m64" \
    FFLAGS="-march=ivybridge -g -O3 -m64" \
    FCFLAGS="-march=ivybridge -g -O3 -m64" \
+   LIBnn=lib \
+   PAGER=/usr/bin/less \
+   PERL=/usr/bin/perl \
+   R_PAPERSIZE=a4 \
+   R_BATCHSAVE="--no-save --no-restore" \
+   R_BROWSER=xdg-open \
+   R_PDFVIEWER=mupdf \
+   R_UNZIPCMD=/usr/bin/unzip \
+   R_ZIPCMD=/usr/bin/zip \
+   R_PRINTCMD=/usr/bin/lpr \
    ./configure --enable-R-shlib \
                --without-blas \
                --without-lapack \
                --with-readline \
 && make \
 && make install \
-&& cd \
-&& rm -rf /tmp/R-devel \
+&& cd /tmp \
+&& rm -rf R-devel \
 && apt-get autoremove -y \
    subversion \
    rsync \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists \
+&& rm -rf *
 
 # Add user
 RUN echo 'root:test' | chpasswd \
@@ -74,20 +77,23 @@ RUN echo 'root:test' | chpasswd \
 && usermod -a -G video docker \
 && groupmod -g 92 audio \
 && usermod -a -G audio docker \
-&& printf 'en_IE.UTF-8 UTF-8\n' >> /etc/locale.gen \
+&& cd /etc \
+&& printf '\nen_IE.UTF-8 UTF-8\n' >> locale.gen \
 && locale-gen \
 # set standard repository
-&& cd \
-&& printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > /home/docker/.Rprofile \
+&& cd /home/docker \
+&& printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > .Rprofile \
 # set vim as default editor; vi-editing mode for bash
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
 # Set vi-editing mode for R
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
+&& cd /root \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc
 
 ENV LANG en_IE.UTF-8
 ENV HOME /home/docker
+ENV OPENBLAS_NUM_THREADS 4
 WORKDIR /home/docker
 USER docker
 
