@@ -24,7 +24,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && cd /var/lib/apt/lists/ \
 && rm -rf *
 
-RUN apt-get update -qq -y \
+RUN export DEBIAN_FRONTEND=noninteractive \
+&& export DEBCONF_NONINTERACTIVE_SEEN=true \
+&& apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    subversion \
    rsync \
