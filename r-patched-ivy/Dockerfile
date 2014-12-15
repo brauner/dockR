@@ -94,8 +94,8 @@ RUN echo 'root:test' | chpasswd \
 && cd /root \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc
 
-ENV LANG en_IE.UTF-8 \
-    HOME /home/docker
+ENV LANG=en_IE.UTF-8 \
+    HOME=/home/docker
 WORKDIR /home/docker
 USER docker
 

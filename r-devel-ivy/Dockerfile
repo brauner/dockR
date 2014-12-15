@@ -95,8 +95,8 @@ RUN echo 'root:test' | chpasswd \
 && printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc
 
 ENV LANG=en_IE.UTF-8 \
-    HOME /home/docker \
-    OPENBLAS_NUM_THREADS 4
+    HOME=/home/docker \
+    OPENBLAS_NUM_THREADS=4
 WORKDIR /home/docker
 USER docker
 
