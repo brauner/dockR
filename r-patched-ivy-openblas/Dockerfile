@@ -75,7 +75,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && make install \
 && cd /usr/local/lib/R/lib \
 && mv libRblas.so libRblas.so.old \
-&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.12.so libRblas.so \
+&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.13.so libRblas.so \
 && cd /tmp \
 && rm -rf R-patched \
 && apt-get autoremove -y \
