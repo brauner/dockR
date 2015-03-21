@@ -43,7 +43,7 @@ RUN apt-get update -qq -y \
    subversion \
    rsync \
 && cd /tmp \
-&& svn co http://svn.r-project.org/R/branches/R-3-1-branch R-patched \
+&& svn co http://svn.r-project.org/R/branches/R-3-2-branch R-patched \
 && cd /tmp/R-patched \
 && tools/rsync-recommended \
 && AWK=/usr/bin/awk \
