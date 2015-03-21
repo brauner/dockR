@@ -3,12 +3,14 @@ FROM brauner/debian:testing
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-&& printf '\npath-exclude=/usr/share/locale/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/locale/locale.alias' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-exclude=/usr/share/man/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/en*' >> /etc/dpkg/dpkg.cfg.d/excludes \
-&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> /etc/dpkg/dpkg.cfg.d/excludes \
+&& export DEBCONF_NONINTERACTIVE_SEEN=true \
+&& cd /etc/dpkg/dpkg.cfg.d \
+&& printf '\npath-exclude=/usr/share/locale/*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/en*' >> excludes \
+&& printf '\npath-include=/usr/share/locale/locale.alias' >> excludes \
+&& printf '\npath-exclude=/usr/share/man/*' >> excludes \
+&& printf '\npath-include=/usr/share/man/en*' >> excludes \
+&& printf '\npath-include=/usr/share/man/man[1-9]/*' >> excludes \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    locales \
@@ -21,7 +23,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    r-base-dev \
    r-recommended \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists \
+&& rm -rf *
 
 RUN apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
@@ -31,14 +34,17 @@ RUN apt-get update -qq -y \
 && cd /tmp/openblas \
 && make TARGET=SANDYBRIDGE \
 && make install PREFIX=/usr/local \
-&& cd \
-&& rm -rf /tmp/openblas \
+&& cd /tmp \
+&& rm -rf openblas \
 && apt-get autoremove -y \
    git \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists \
+&& rm -rf *
 
-RUN apt-get update -qq -y \
+RUN export DEBIAN_FRONTEND=noninteractive \
+&& export DEBCONF_NONINTERACTIVE_SEEN=true \
+&& apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    subversion \
    rsync \
@@ -69,14 +75,15 @@ RUN apt-get update -qq -y \
 && make install \
 && cd /usr/local/lib/R/lib \
 && mv libRblas.so libRblas.so.old \
-&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.12.so libRblas.so \
-&& cd \
-&& rm -rf /tmp/R-patched \
+&& ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.13.so libRblas.so \
+&& cd /tmp \
+&& rm -rf R-patched \
 && apt-get autoremove -y \
    subversion \
    rsync \
 && apt-get clean \
-&& rm -rf /var/lib/apt/lists/*
+&& cd /var/lib/apt/lists \
+&& rm -rf *
 
 # Add user
 RUN echo 'root:test' | chpasswd \
@@ -92,20 +99,23 @@ RUN echo 'root:test' | chpasswd \
 && usermod -a -G video docker \
 && groupmod -g 92 audio \
 && usermod -a -G audio docker \
-&& printf '\nen_IE.UTF-8 UTF-8\n' >> /etc/locale.gen \
+&& cd /etc \
+&& printf '\nen_IE.UTF-8 UTF-8\n' >> locale.gen \
 && locale-gen \
 # set standard repository
-&& cd \
-&& printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > /home/docker/.Rprofile \
+&& cd /home/docker \
+&& printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > .Rprofile \
 # set vim as default editor; vi-editing mode for bash
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
-&& printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /home/docker/.bashrc \
+# && printf '# If not running interactively, don'\''t do anything\n[[ \$- != *i* ]] && return\n\nalias ls='\''ls --color=auto'\''\n\nalias grep='\''grep --color=auto'\''\n\nPS1='\''[\\u@\h \W]\\$ '\''\n\ncomplete -cf sudo\n\n# Set default editor.\nexport EDITOR=vim xterm\n\nexport OPENBLAS_NUM_THREADS=4\n\n# Enable vi editing mode.\nset -o vi\n' > /root/.bashrc \
 # Set vi-editing mode for R
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /home/docker/.inputrc \
-&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > /root/.inputrc
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc \
+&& cd /root \
+&& printf 'set editing-mode vi\n\nset keymap vi-command\n' > .inputrc
 
-ENV LANG en_IE.UTF-8
-ENV HOME /home/docker
+ENV LANG=en_IE.UTF-8 \
+    HOME=/home/docker \
+    OPENBLAS_NUM_THREADS=4
 WORKDIR /home/docker
 USER docker
 
