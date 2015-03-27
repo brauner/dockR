@@ -16,6 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    locales \
    less \
    libcurl4-gnutls-dev \
+   lmodern \
    zip \
    unzip \
 && apt-get build-dep -y \
