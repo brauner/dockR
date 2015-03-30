@@ -84,6 +84,8 @@ RUN echo 'root:test' | chpasswd \
 && cd /etc \
 && printf '\nen_IE.UTF-8 UTF-8\n' >> locale.gen \
 && locale-gen \
+&& echo 'Europe/Berlin' > /etc/timezone &&
+&& dpkg-reconfigure -f noninteractive tzdata &&
 # set standard repository
 && cd /home/docker \
 && printf 'options(repos=structure(c(CRAN='\''http://stat.ethz.ch/CRAN/'\'')))\n' > .Rprofile \
