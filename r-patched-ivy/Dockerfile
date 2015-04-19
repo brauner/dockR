@@ -25,6 +25,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    r-recommended \
    texlive-luatex \
    texlive-xetex \
+   texlive-lang-german \
 && apt-get clean \
 && cd /var/lib/apt/lists \
 && rm -rf *
