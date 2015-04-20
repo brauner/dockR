@@ -17,15 +17,16 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    less \
    libcurl4-gnutls-dev \
    lmodern \
+   pandoc \
+   texlive-luatex \
+   texlive-xetex \
+   texlive-lang-german \
    zip \
    unzip \
 && apt-get build-dep -y \
    r-base \
    r-base-dev \
    r-recommended \
-   texlive-luatex \
-   texlive-xetex \
-   texlive-lang-german \
 && apt-get clean \
 && cd /var/lib/apt/lists \
 && rm -rf *
