@@ -11,8 +11,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && printf '\npath-exclude=/usr/share/man/*' >> excludes \
 && printf '\npath-include=/usr/share/man/en*' >> excludes \
 && printf '\npath-include=/usr/share/man/man[1-9]/*' >> excludes \
+&& printf '\ndeb http://www.deb-multimedia.org jessie main non-free' >> /etc/apt/sources.list \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
+   ffmpeg \
    locales \
    less \
    libcurl4-gnutls-dev \
