@@ -15,6 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
    ffmpeg \
+   ghostscript \
    locales \
    less \
    libcurl4-gnutls-dev \
