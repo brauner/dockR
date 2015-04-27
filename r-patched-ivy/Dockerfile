@@ -21,6 +21,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    less \
    libcurl4-gnutls-dev \
    lmodern \
+   mupdf \
    pandoc \
    texlive-luatex \
    texlive-xetex \
