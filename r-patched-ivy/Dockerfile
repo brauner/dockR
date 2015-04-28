@@ -1,4 +1,4 @@
-FROM brauner/debian:testing
+FROM debian:testing
 
 MAINTAINER Christian Brauner christianvanbrauner[at]gmail.com
 
