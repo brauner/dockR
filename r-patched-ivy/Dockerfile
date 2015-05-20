@@ -18,6 +18,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    locales \
    less \
    libcurl4-gnutls-dev \
+   libglu1-mesa-dev \
    lmodern \
    mupdf \
    pandoc \
