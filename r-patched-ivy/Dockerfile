@@ -26,6 +26,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
    texlive-xetex \
    texlive-lang-german \
    texlive-math-extra \
+   vim \
+   wget \
    zip \
    unzip \
 && apt-get build-dep -y \
