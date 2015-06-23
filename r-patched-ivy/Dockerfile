@@ -15,11 +15,12 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && apt-get install -y --no-install-recommends \
    ghostscript \
    imagemagick \
-   locales \
    less \
    libcurl4-gnutls-dev \
    libglu1-mesa-dev \
+   libxml2-dev \
    lmodern \
+   locales \
    mupdf \
    pandoc \
    texlive-luatex \
