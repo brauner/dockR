@@ -13,6 +13,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && echo 'deb-src http://security.debian.org/ testing/updates main contrib non-free' >> /etc/apt/sources.list \
 && apt-get update -qq -y \
 && apt-get install -y --no-install-recommends \
+   llvm \
+   llvm-dev \
+   clang \
    ghostscript \
    imagemagick \
    less \
