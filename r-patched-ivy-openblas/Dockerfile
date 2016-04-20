@@ -36,8 +36,6 @@ RUN apt-get update -qq -y \
 && make install PREFIX=/usr/local \
 && cd /tmp \
 && rm -rf openblas \
-&& apt-get autoremove -y \
-   git \
 && apt-get clean \
 && cd /var/lib/apt/lists \
 && rm -rf *
@@ -78,9 +76,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && ln -s /usr/local/lib/libopenblas_sandybridgep-r0.2.13.so libRblas.so \
 && cd /tmp \
 && rm -rf R-patched \
-&& apt-get autoremove -y \
-   subversion \
-   rsync \
 && apt-get clean \
 && cd /var/lib/apt/lists \
 && rm -rf *

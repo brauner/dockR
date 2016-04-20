@@ -55,9 +55,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 && make install \
 && cd /tmp \
 && rm -rf R-devel \
-&& apt-get autoremove -y \
-   subversion \
-   rsync \
 && apt-get clean \
 && cd /var/lib/apt/lists \
 && rm -rf *
